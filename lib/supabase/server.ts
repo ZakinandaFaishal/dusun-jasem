@@ -1,9 +1,9 @@
-import { createServerClient } from "@supabase/ssr";
-import { createClient } from "@supabase/supabase-js";
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import type { SupabaseClient } from "@supabase/supabase-js";
 import type { Database } from "@/types/database.types";
+import { createClient } from "@supabase/supabase-js";
 
-// Dipakai di Server Components, Server Actions, dan Route Handlers.
 export async function createSupabaseServerClient() {
   const cookieStore = await cookies();
 
@@ -15,7 +15,7 @@ export async function createSupabaseServerClient() {
         getAll() {
           return cookieStore.getAll();
         },
-        setAll(cookiesToSet) {
+        setAll(cookiesToSet: { name: string; value: string; options: CookieOptions }[]) {
           try {
             cookiesToSet.forEach(({ name, value, options }) =>
               cookieStore.set(name, value, options),
@@ -27,11 +27,9 @@ export async function createSupabaseServerClient() {
         },
       },
     },
-  );
+  ) as unknown as SupabaseClient<Database>;
 }
 
-// Dipakai untuk static generation dan read-only public queries yang tidak
-// memiliki request scope, jadi tidak boleh bergantung pada cookies().
 export function createSupabasePublicClient() {
   return createClient<Database>(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,

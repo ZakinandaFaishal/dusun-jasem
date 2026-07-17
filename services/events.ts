@@ -14,7 +14,7 @@ export async function getUpcomingEvents(): Promise<AgendaEvent[]> {
     throw new Error(`Gagal mengambil data agenda: ${error.message}`);
   }
 
-  return data ?? [];
+return (data ?? []) as AgendaEvent[];
 }
 
 export async function getAllEvents(): Promise<AgendaEvent[]> {
@@ -29,7 +29,7 @@ export async function getAllEvents(): Promise<AgendaEvent[]> {
     throw new Error(`Gagal mengambil data agenda: ${error.message}`);
   }
 
-  return data ?? [];
+return (data ?? []) as AgendaEvent[];
 }
 
 export async function getEventById(id: string): Promise<AgendaEvent | null> {
@@ -45,5 +45,5 @@ export async function getEventById(id: string): Promise<AgendaEvent | null> {
     throw new Error(`Gagal mengambil detail agenda: ${error.message}`);
   }
 
-  return data;
+return data as AgendaEvent | null;
 }

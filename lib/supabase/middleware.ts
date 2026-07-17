@@ -1,8 +1,6 @@
-import { createServerClient } from "@supabase/ssr";
+import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
-// Menyegarkan sesi Supabase Auth pada setiap request agar cookie
-// selalu up to date sebelum mencapai Server Components.
 export async function updateSession(request: NextRequest) {
   let response = NextResponse.next({ request });
 
@@ -14,7 +12,7 @@ export async function updateSession(request: NextRequest) {
         getAll() {
           return request.cookies.getAll();
         },
-        setAll(cookiesToSet) {
+        setAll(cookiesToSet: { name: string; value: string; options: CookieOptions }[]) {
           cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value),
           );

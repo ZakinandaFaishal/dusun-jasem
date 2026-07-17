@@ -273,6 +273,7 @@ export type Database = {
       }
       gallery_items: {
         Row: {
+          attachment_url: string | null
           category: Database["public"]["Enums"]["gallery_category"]
           created_at: string
           display_order: number
@@ -282,6 +283,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          attachment_url?: string | null
           category: Database["public"]["Enums"]["gallery_category"]
           created_at?: string
           display_order?: number
@@ -291,6 +293,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          attachment_url?: string | null
           category?: Database["public"]["Enums"]["gallery_category"]
           created_at?: string
           display_order?: number
